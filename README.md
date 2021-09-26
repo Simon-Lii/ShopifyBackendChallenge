@@ -5,6 +5,7 @@ Open new terminal, install backend server
 3) ./venv/Scripts/activate (for windows)
 3) source venv/bin/activate (for mac)
 4) pip install -r requirements.txt
+5) flask run
 
 Open new terminal, install frontend server
 
