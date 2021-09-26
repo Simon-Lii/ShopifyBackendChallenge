@@ -1,0 +1,6 @@
+pymongo
+dnspython
+flask
+pyjwt
+Pillow
+matplotlib
