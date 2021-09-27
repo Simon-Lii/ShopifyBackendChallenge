@@ -1,4 +1,4 @@
-You need Python >= 3.7.0 and < 3.8
+Youtube Demo: https://www.youtube.com/watch?v=FWEuOversQ0
 
 You also should ideally run all these commands through a linux command line. Macbook works fine, but you might need to install
 linux subsystem on windows.
