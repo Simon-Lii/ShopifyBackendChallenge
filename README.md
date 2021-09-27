@@ -7,7 +7,7 @@ Prerequisites:
 
 1) Have Python >= 3.7.0 and < 3.8 installed
 2) You need to have the latest version of Pip
-3) You need to have virtualenv install: pip install virtualenv
+3) You need to have virtualenv installed: pip install virtualenv
 
 Open new terminal, install backend server
 
