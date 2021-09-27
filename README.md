@@ -1,3 +1,14 @@
+You need Python >= 3.7.0 and < 3.8
+
+You also should ideally run all these commands through a linux command line. Macbook works fine, but you might need to install
+linux subsystem on windows.
+
+Prerequisites:
+
+1) Have Python >= 3.7.0 and < 3.8 installed
+2) You need to have the latest version of Pip
+3) You need to have virtualenv install: pip install virtualenv
+
 Open new terminal, install backend server
 
 1) cd backend
