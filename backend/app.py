@@ -5,8 +5,14 @@ from werkzeug.utils import secure_filename
 from flask import Flask, make_response, request, jsonify
 import uuid
 import json
+import io
+from PIL import Image
+from backend.database import repo
+from imageai.Classification import ImageClassification
+import os
 
 db_user = UserRepo()
+image_repo = repo("user")
 
 app = Flask("app")
 if not os.path.exists('../uploads'):
@@ -73,18 +79,48 @@ def login():
 def upload_api():
     token = request.cookies["token"]
     id = retrieve_id(token)
-    '''
+    print(request)
     if "file" in request.files:
-        saved_file = request.files["file"]
-        saved_file.save(os.path.join("audio_transcription/temp_song/", secure_filename(saved_file.filename)))
-        data = music_trans.audio_to_score(saved_file.filename)
-        pdf_filename = data[1]
-        musical_data = data[2]
-        entry = db_user.read_user(id)
-        new_history_field = {"history": entry["history"] + [musical_data]}
-        db_user.update_user(id, new_history_field)
-        return {"status": "success", "filename": bucket.generate_presigned_url(pdf_filename)}, 200'''
+        im = Image.open(request.files["file"])
+        image_bytes = io.BytesIO()
+        im.save(image_bytes, format='JPEG')
+        im.save("model.jpeg")
+        execution_path = os.getcwd()
+
+        prediction = ImageClassification()
+        prediction.setModelTypeAsDenseNet121()
+        prediction.setModelPath(os.path.join(execution_path, "DenseNet-BC-121-32.h5"))
+        prediction.loadModel()
+
+        predictions, probabilities = prediction.classifyImage(os.path.join(execution_path, "model.jpeg"), result_count=5 )
+
+        item = None
+        best_prob = 0
+        for eachPrediction, eachProbability in zip(predictions, probabilities):
+            print(eachPrediction , " : " , eachProbability)
+            if eachProbability > best_prob:
+                best_prob = eachProbability
+                item = eachPrediction
+
+        image = {
+            'image': image_bytes.getvalue(),
+            'name' : request.files["file"].filename,
+            'description' : item
+        }
+        image_repo.create(image)
+        return {"status": "success"}, 200
     return {"status": "bad request"}, 400
+
+@app.route("/api/image/<string:text>", methods=["GET"])
+def read_image(text):
+    token = request.cookies["token"]
+    id = retrieve_id(token)
+    temp = image_repo.get_entry("description", text)
+    if temp is None:
+        temp = image_repo.get_entry("name", text)
+    return temp["image"]
+    
+
 
 
 @app.route("/api/sign_out", methods=["GET"])

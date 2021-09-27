@@ -7,7 +7,7 @@ url = "mongodb+srv://simon:simon@hackthenorth2021.kat9o.mongodb.net/test?ssl=tru
 db = MongoClient(url, connect=False)["hack"]["user"]
 images = db
 
-im = Image.open("book.jpg")
+im = Image.open("mountain.jpg")
 
 image_bytes = io.BytesIO()
 im.save(image_bytes, format='JPEG')

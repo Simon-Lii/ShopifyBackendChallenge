@@ -27,10 +27,10 @@
 }
 
 #background{
-	background-image: url("../img/background2.gif");
+	background-image: url("../img/coding.jpeg");
 	
 	/* Add the blur effect */
-	filter: blur(5px);
+	filter: blur(0px);
 	
 	/* Full height */
 	min-height: 100vh;

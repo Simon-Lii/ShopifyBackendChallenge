@@ -34,7 +34,6 @@ hr{
 	width: fit-content;
 	max-width: 30vh;
 	height: 100%;
-	justify-content: center;
 	align-items: center;
 	background-color: rgb(42, 42, 42);
 	border-radius: 0%;
@@ -68,4 +67,12 @@ hr{
 
 .titler {
 	color: whitesmoke;
+}
+
+#imagemain {
+	padding: 0;
+    display: block;
+    margin: 0 auto;
+    max-height: 80%;
+    max-width: 80%;
 }
